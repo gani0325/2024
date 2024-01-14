@@ -65,6 +65,7 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
     dy = [0, 0, -1, 1]
 
     q = deque()
+    
     # 첫 시작
     q.append([characterX * 2, characterY * 2])
     visited = [[0] * 102 for _ in range(102)]
