@@ -38,3 +38,55 @@ rectangle	                                characterX	characterY	itemX	itemY	resu
 [[2,1,7,5],[6,4,10,10]]	                    3	        1	        7	    10	    15
 [[2,2,5,5],[1,3,6,4],[3,1,4,6]]	            1	        4	        6	    3	    10
 """
+
+from collections import deque
+
+# 지형을 나타내는 직사각형이 담긴 2차원 배열 rectangle, 초기 캐릭터의 위치 characterX, characterY, 아이템의 위치 itemX, itemY
+def solution(rectangle, characterX, characterY, itemX, itemY):
+    answer = 0
+
+    # 모든 좌표값은 1 이상 50 이하인 자연수
+    graph = [[-1] * 102 for i in range(102)]
+
+    for r in rectangle:
+        x1, y1, x2, y2 = r[0] * 2, r[1] * 2, r[2] * 2, r[3] * 2
+
+        for i in range(x1, x2+1):
+            for j in range(y1, y2+1):
+
+                # 내부일 때
+                if x1 < i < x2 and y1 < j < y2:
+                    graph[i][j] = 0
+                # 테두리일 때
+                elif graph[i][j] != 0:
+                    graph[i][j] = 1
+
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+
+    q = deque()
+    # 첫 시작
+    q.append([characterX * 2, characterY * 2])
+    visited = [[0] * 102 for _ in range(102)]
+    visited[characterX * 2][characterY * 2] = 1
+
+    # 최단거리 찾기
+    while q:
+        x, y = q.popleft()
+
+        # 캐릭터와 아이템 위치가 같을 때
+        if x == itemX * 2 and y == itemY * 2:
+            answer = (visited[x][y] - 1) // 2
+            break
+
+        for k in range(4):
+            nx = x + dx[k]
+            ny = y + dy[k]
+
+            # 방문도 안했고, 테두리인 경우
+            if graph[nx][ny] == 1 and visited[nx][ny] == 0:
+                q.append([nx, ny])
+                # 최단거리 증가
+                visited[nx][ny] = visited[x][y] + 1
+
+    return answer

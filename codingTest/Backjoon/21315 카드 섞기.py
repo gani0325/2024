@@ -25,3 +25,52 @@
 💙 출력
 첫 번째 K와 두 번째 K를 출력한다.
 """
+
+# n개의 카드, 
+# 쌍을 순서대로 모두 검사(카드 섞기)하여 입력 값과 같은 쌍을 찾는 것
+
+def mix( card,  cnt) :
+	# 위로 올린 카드들, 현재 위로 올릴 카드 개수
+	temp = []
+	idx = 0
+    i = card - cnt
+    for i in range(card)  :
+		temp[idx++] = card[i]
+		card[i] = 0
+	
+	for i in range(n)  :
+		if (card[i] != 0) : 
+			temp[idx++] = card[i]
+		card[i] = temp[i]
+
+
+
+def solve(k) :
+    card = n
+    for i in range(k + 2) :
+		cnt = pow(2,k - i + 1)
+		mix(card, cnt)
+		card = cnt
+
+n = int(input())
+result = list(map(int, input().split()))
+
+k1 = 1
+k2 = 1
+card = []
+for k1 in range(pow(2, k1), n + 1) :
+    for k2 in range(pow(2, k2), n + 1) :
+        for i in range(n) :
+            card[i] = i + 1
+        
+        # 섞기 2번씩
+        solve(k1)
+        solve(k2)
+        isFinish = True
+        for i in range(n)
+            if (result[i] != card[i]) :
+                isFinish = False
+                break
+            
+        if (isFinish) :
+            print(result)
