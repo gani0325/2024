@@ -28,27 +28,27 @@ def solution(N, number):
     num = [] # 숫자 조합을 담는 리스트
     
     for i in range(1, 9):
-        case = set()
-        case.add(int(str(N)*i)) # 이어붙이는 경우의 수
+        temp = set()
+        temp.add(int(str(N)*i)) # 이어붙이는 경우의 수
         
         # 숫자 조합끼리의 사칙연산
         for j in range(0, i-1):  
             for x in num[j]:    # (1, n-1) 부터 (n-1, 1)까지
                 for y in num[-j-1]:
-                    case.add(x + y)
-                    case.add(x - y)
-                    case.add(x * y)
+                    temp.add(x + y)
+                    temp.add(x - y)
+                    temp.add(x * y)
                     # 0 으로 안나눠짐
                     if x != 0 :
-                        case.add(y // x)
+                        temp.add(y // x)
                     if y != 0 :
-                        case.add(x // y)
+                        temp.add(x // y)
         
         # 숫자 조합에 number 가 있는 경우
-        if number in case:
+        if number in temp:
             return i
         
         # 숫자 조합에 number 가 없으면 리스트에 추가
-        num.append(case)
+        num.append(temp)
         
     return -1
