@@ -1,5 +1,6 @@
 from queue import Queue
 
+
 class Point:
     def __init__(self, row, col):
         self.row = row

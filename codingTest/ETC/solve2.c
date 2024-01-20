@@ -82,5 +82,6 @@ int main()
     {
         printf("Failed to read the maze from file.\n");
     }
+
     return 0;
 }
